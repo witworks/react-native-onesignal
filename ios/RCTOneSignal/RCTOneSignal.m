@@ -16,14 +16,17 @@
 
 #endif
 
+@interface OneSignal ()
++ (void) setMSDKType:(NSString*)type;
+@end
+
 @interface RCTOneSignal ()
 @end
 
 @implementation RCTOneSignal
 
-@synthesize bridge = _bridge;
 
-RCT_EXPORT_MODULE(RNOneSignal)
+RCT_EXPORT_MODULE()
 
 /**
 * Override this method to return an array of supported event names. Attempting
@@ -45,7 +48,7 @@ RCT_EXPORT_MODULE(RNOneSignal)
 
 - (id)initWithLaunchOptions:(NSDictionary *)launchOptions appId:(NSString *)appId settings:(NSDictionary*)settings {
     
-    [OneSignal setValue:@"react" forKey:@"mSDKType"];
+    [OneSignal setMSDKType:@"react"];
     
     [OneSignal initWithLaunchOptions:launchOptions
                                appId:appId
@@ -66,15 +69,15 @@ RCT_EXPORT_MODULE(RNOneSignal)
 }
 
 - (void)handleRemoteNotificationReceived:(NSString *)notification {
-    [self.bridge.eventDispatcher sendAppEventWithName:@"remoteNotificationReceived" body:notification];
+    [self sendEventWithName:@"remoteNotificationReceived" body:notification];
 }
 
 - (void)handleRemoteNotificationOpened:(NSString *)result {
-    [self.bridge.eventDispatcher sendAppEventWithName:@"remoteNotificationOpened" body:result];
+    [self sendEventWithName:@"remoteNotificationOpened" body:result];
 }
 
 - (void)handleRemoteNotificationsRegistered:(NSNotification *)notification {
-    [self.bridge.eventDispatcher sendAppEventWithName:@"remoteNotificationsRegistered" body:notification.userInfo];
+    [self sendEventWithName:@"remoteNotificationsRegistered" body:notification.userInfo];
 }
 
 RCT_EXPORT_METHOD(checkPermissions:(RCTResponseSenderBlock)callback)
@@ -149,7 +152,7 @@ RCT_EXPORT_METHOD(configure) {
           @"userId" : userId ?: [NSNull null]
         };
 
-        [self.bridge.eventDispatcher sendAppEventWithName:@"idsAvailable" body:params];
+       // [self sendEventWithName:@"idsAvailable" body:params];
     }];
 }
 

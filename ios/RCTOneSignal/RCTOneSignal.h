@@ -1,7 +1,7 @@
 #import "RCTBridgeModule.h"
 #import "RCTEventEmitter.h"
 
-@interface RCTOneSignal : NSObject <RCTBridgeModule>
+@interface RCTOneSignal : RCTEventEmitter
 
 - (id)initWithLaunchOptions:(NSDictionary *)launchOptions appId:(NSString *)appId;
 - (id)initWithLaunchOptions:(NSDictionary *)launchOptions appId:(NSString *)appId settings:(NSDictionary*)settings;

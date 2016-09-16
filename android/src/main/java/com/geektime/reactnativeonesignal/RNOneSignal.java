@@ -86,8 +86,13 @@ public class RNOneSignal extends ReactContextBaseJavaModule implements Lifecycle
     }
 
     @ReactMethod
-    public void inFocusDisplaying(OneSignal.OSInFocusDisplayOption displayOption) {
-        OneSignal.setInFocusDisplaying(displayOption);
+    public void inFocusDisplaying(int displayOption) {
+        OneSignal.OSInFocusDisplayOption opt = OneSignal.OSInFocusDisplayOption.InAppAlert;
++        if (displayOption == 0)
++            opt = OneSignal.OSInFocusDisplayOption.None;
++        else if (displayOption == 2)
++            opt = OneSignal.OSInFocusDisplayOption.Notification;
++        OneSignal.setInFocusDisplaying(opt);
     }
 
     @ReactMethod
@@ -121,8 +126,49 @@ public class RNOneSignal extends ReactContextBaseJavaModule implements Lifecycle
     }
 
     @ReactMethod
-    public void setlogLevel(OneSignal.LOG_LEVEL logLevel, OneSignal.LOG_LEVEL visualLogLevel) {
-        OneSignal.setLogLevel(logLevel, visualLogLevel);
+    public void setlogLevel(int logLevel, int visualLogLevel) {
+
+        OneSignal.LOG_LEVEL ll, vll;
+
+        switch(logLevel) {
+            case 0:
+                ll = OneSignal.LOG_LEVEL.NONE;
+            case 1:
+                ll = OneSignal.LOG_LEVEL.FATAL;
+            case 2:
+                ll = OneSignal.LOG_LEVEL.ERROR;
+            case 3:
+                ll = OneSignal.LOG_LEVEL.WARN;
+             case 4:
+                ll = OneSignal.LOG_LEVEL.INFO;
+             case 5:
+                ll = OneSignal.LOG_LEVEL.DEBUG;
+             case 6:
+                ll = OneSignal.LOG_LEVEL.VERBOSE;
+            default:
+                ll = OneSignal.LOG_LEVEL.NONE;
+        }
+
+        switch(visualLogLevel) {
+            case 0:
+                vll = OneSignal.LOG_LEVEL.NONE;
+            case 1:
+                vll = OneSignal.LOG_LEVEL.FATAL;
+            case 2:
+                vll = OneSignal.LOG_LEVEL.ERROR;
+            case 3:
+                vll = OneSignal.LOG_LEVEL.WARN;
+             case 4:
+                vll = OneSignal.LOG_LEVEL.INFO;
+             case 5:
+                vll = OneSignal.LOG_LEVEL.DEBUG;
+             case 6:
+                vll = OneSignal.LOG_LEVEL.VERBOSE;
+            default:
+                vll = OneSignal.LOG_LEVEL.NONE;
+        }
+
+        OneSignal.setLogLevel(ll, vll);
     }
 
     @ReactMethod
