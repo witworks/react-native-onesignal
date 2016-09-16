@@ -1,5 +1,5 @@
 /**
- * @providesModule OneSignal
+ * @providesModule RNOneSignal
  */
 
 'use strict';
@@ -7,7 +7,6 @@
 import { NativeModules, NativeEventEmitter, NetInfo, Platform } from 'react-native';
 import invariant from 'invariant';
 
-//SHOULD remove 'RCT' from the beginning as React omits it from the name
 const { RNOneSignal } = NativeModules;
 
 var OneSignal = {

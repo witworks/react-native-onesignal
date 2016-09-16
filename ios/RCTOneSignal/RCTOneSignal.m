@@ -26,7 +26,7 @@
 @implementation RCTOneSignal
 
 
-RCT_EXPORT_MODULE()
+RCT_EXPORT_MODULE(RNOneSignal)
 
 /**
 * Override this method to return an array of supported event names. Attempting
