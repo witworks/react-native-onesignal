@@ -184,7 +184,7 @@ public class MainApplication extends Application implements ReactApplication {
 ## iOS Installation
 
  * Follow the steps according to the official OneSignal SDK Installation here: https://documentation.onesignal.com/docs/installing-the-onesignal-ios-sdk
- * Make sure you installed the OneSignal Pod (Version 1.13.3).
+ * Make sure you installed the OneSignal Pod.
  * Once you've finished, Open your project in Xcode.
 
 ### Importing The Library
@@ -256,26 +256,23 @@ import OneSignal from 'react-native-onesignal'; // Import package from node modu
 // var _navigator; // If applicable, declare a variable for accessing your navigator object to handle payload.
 
 OneSignal.configure({
-	onIdsAvailable: function(device) {
-		console.log('UserId = ', device.userId);
-		console.log('PushToken = ', device.pushToken);
-	},
-  onNotificationReceived: function(notification) {
-    console.log('MESSAGE RECEIVED: ', notification["notification"]["notificationID"];
-  },
-  onNotificationOpened: function(openResult) {
-      console.log('MESSAGE: ', openResult["notification"]["payload"]["body"]);
-      console.log('DATA: ', openResult["notification"]["payload"]["additionalData"]);
-      console.log('ISACTIVE: ', openResult["notification"]["isAppInFocus"]);
-      // Do whatever you want with the objects here
-      // _navigator.to('main.post', data.title, { // If applicable
-      //  article: {
-      //    title: openResult["notification"]["payload"]["body"],
-      //    link: openResult["notification"]["payload"]["launchURL"],
-      //    action: data.openResult["notification"]["action"]["actionSelected"]
-      //  }
-      // });
-  }
+    onIdsAvailable: function(device) {
+        if (Object.keys(device).length === 0 && device.constructor === Object) {
+            console.log("An error occured when trying to sync with OneSignal. Please try to close and run the app again.");
+        } else {
+            console.log('UserId = ', device.userId);
+            console.log('PushToken = ', device.pushToken);
+        }
+    },
+    onNotificationReceived: function(notification) {
+        console.log('MESSAGE RECEIVED: ', notification);
+    },
+    onNotificationOpened: function(notification) {
+        const { payload, isAppInFocus } = notification;
+        let { body, additionalData } = payload;
+        additionalData = JSON.parse(additionalData);
+        console.log("Do what you want with the variables here");
+    }
 });
 ```
 
@@ -599,7 +596,7 @@ Add the line pod 'OneSignal' as follows:
 ````
 target 'YourApp' do
 ...
-pod 'OneSignal', '1.13.3'
+pod 'OneSignal'
 
 end
 
