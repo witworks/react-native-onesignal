@@ -1,5 +1,5 @@
 /**
- * @providesModule Notifications
+ * @providesModule OneSignal
  */
 
 'use strict';
@@ -8,9 +8,9 @@ import { NativeModules, NativeEventEmitter, NetInfo, Platform } from 'react-nati
 import invariant from 'invariant';
 
 //SHOULD remove 'RCT' from the beginning as React omits it from the name
-var RNOneSignal = NativeModules.OneSignal;
+const { RNOneSignal } = NativeModules;
 
-var Notifications = {
+var OneSignal = {
 	onError: false,
 	onNotificationReceived: false,
 	onNotificationOpened: false,
@@ -34,7 +34,7 @@ var DEVICE_IDS_AVAILABLE = 'idsAvailable';
  * @param {function}	options.onNotificationOpened - Fired when a remote notification is received.
  * @param {function} 	options.onError - None
  */             
-Notifications.configure = function(options: Object) {
+OneSignal.configure = function(options: Object) {
 	if ( typeof options.onError !== 'undefined' ) {
 		this.onError = options.onError;
 	}
@@ -52,8 +52,8 @@ Notifications.configure = function(options: Object) {
 		this.onNotificationOpened = options.onNotificationOpened;
 
 		if (_pendingNotificationsOpened.length > 0) {
-			var result = _pendingNotificationsOpened.pop();
-			this._onNotificationOpened(JSON.parse(result));
+			var openResult = _pendingNotificationsOpened.pop();
+			this._onNotificationOpened(JSON.parse(openResult));
 		}
 	}
 
@@ -67,23 +67,23 @@ Notifications.configure = function(options: Object) {
 
 	function handleConnectionStateChange(isConnected) {
     	if(!isConnected) return;
-
     	RNOneSignal.configure();
     	NetInfo.isConnected.removeEventListener('change', handleConnectionStateChange);
   	}
 
-  NetInfo.isConnected.fetch().then(isConnected => {
-    if(isConnected) return RNOneSignal.configure();
-    NetInfo.isConnected.addEventListener('change', handleConnectionStateChange);
-  }).catch((...args)=>this.onError(args));
+	NetInfo.isConnected.fetch().then(isConnected => {
+		if(isConnected) return RNOneSignal.configure();
+		NetInfo.isConnected.addEventListener('change', handleConnectionStateChange);
+	}).catch((args)=>this.onError(args));
+
 };
 
 /* Unregister */
-Notifications.unregister = function() {
+OneSignal.unregister = function() {
 	this.onNotificationOpened = false;
 };
 
-Notifications.requestPermissions = function(permissions) {
+OneSignal.requestPermissions = function(permissions) {
 	var requestedPermissions = {};
 	if (Platform.OS == 'ios') {
 		if (permissions) {
@@ -105,7 +105,7 @@ Notifications.requestPermissions = function(permissions) {
 	}
 };
 
-Notifications.registerForPushNotifications = function(){
+OneSignal.registerForPushNotifications = function(){
 	if (Platform.OS == 'ios') {
 		RNOneSignal.registerForPushNotifications();
 	} else {
@@ -113,7 +113,7 @@ Notifications.registerForPushNotifications = function(){
 	}
 };
 
-Notifications.checkPermissions = function(callback: Function) {
+OneSignal.checkPermissions = function(callback: Function) {
 	if (Platform.OS == 'ios') {
 		invariant(
 			typeof callback === 'function',
@@ -126,7 +126,7 @@ Notifications.checkPermissions = function(callback: Function) {
 };
 
 //notification is a stringified JSON object of type OSNotification
-Notifications._onNotificationReceived = function(notification) {
+OneSignal._onNotificationReceived = function(notification) {
 	if ( this.onNotificationReceived === false) {
 		_pendingNotificationsReceived.push(notification);
 		return;
@@ -135,38 +135,38 @@ Notifications._onNotificationReceived = function(notification) {
 };
 
 //result is a stringified JSON object of type OSNOtificationResult
-Notifications._onNotificationOpened = function(result) {
+OneSignal._onNotificationOpened = function(openResult) {
 	if ( this.onNotificationOpened === false ) {
-		_pendingNotificationsOpened.push(result);
+		_pendingNotificationsOpened.push(openResult);
 		return;
 	}
-	this.onNotificationOpened(JSON.parse(result));
+	this.onNotificationOpened(JSON.parse(openResult));
 };
 
-Notifications._onNotificationsRegistered = function(payload) {
+OneSignal._onNotificationsRegistered = function(payload) {
 	if ( this.onNotificationsRegistered === false ) {
 		return;
  	}
  	this.onNotificationsRegistered(payload);
 };
 
-Notifications.sendTag = function(key, value) {
+OneSignal.sendTag = function(key, value) {
 	RNOneSignal.sendTag(key, value);
 };
 
-Notifications.sendTags = function(tags) {
+OneSignal.sendTags = function(tags) {
 	RNOneSignal.sendTags(tags || {});
 };
 
-Notifications.getTags = function(next) {
+OneSignal.getTags = function(next) {
 	RNOneSignal.getTags(next);
 };
 
-Notifications.deleteTag = function(key) {
+OneSignal.deleteTag = function(key) {
 	RNOneSignal.deleteTag(key);
 };
 
-Notifications.enableVibrate = function(enable) {
+OneSignal.enableVibrate = function(enable) {
 	if (Platform.OS == 'android') {
 		RNOneSignal.enableVibrate(enable);
 	} else {
@@ -174,7 +174,7 @@ Notifications.enableVibrate = function(enable) {
 	}
 };
 
-Notifications.enableSound = function(enable) {
+OneSignal.enableSound = function(enable) {
 	if (Platform.OS == 'android') {
 		RNOneSignal.enableSound(enable);
 	} else {
@@ -183,24 +183,24 @@ Notifications.enableSound = function(enable) {
 };
 
 
-Notifications.setSubscription = function(enable) {
+OneSignal.setSubscription = function(enable) {
 	RNOneSignal.setSubscription(enable);
 };
 
-Notifications.promptLocation = function() {
+OneSignal.promptLocation = function() {
 	//Supported in both iOS & Android
 	RNOneSignal.promptLocation();
 };
 
 //Android only: Set Display option of the notifications. displayOption is of type OSInFocusDisplayOption
 // 0 -> None, 1 -> InAppAlert, 2 -> Notification
-Notifications.inFocusDisplaying = function(displayOption) {
+OneSignal.inFocusDisplaying = function(displayOption) {
 	if (Platform.OS == 'android') {
 		RNOneSignal.inFocusDisplaying(displayOption);
 	}
 }
 
-Notifications.postNotification = function(contents, data, player_id) {
+OneSignal.postNotification = function(contents, data, player_id) {
 	if (Platform.OS == 'android') {
 		RNOneSignal.postNotification(JSON.stringify(contents), JSON.stringify(data), player_id);
 	} else {
@@ -208,7 +208,7 @@ Notifications.postNotification = function(contents, data, player_id) {
 	}
 };
 
-Notifications.clearOneSignalNotifications = function() {
+OneSignal.clearOneSignalNotifications = function() {
 	if (Platform.OS == 'android') {
 		RNOneSignal.clearOneSignalNotifications();
 	} else {
@@ -216,7 +216,7 @@ Notifications.clearOneSignalNotifications = function() {
 	}
 };
 
-Notifications.cancelNotification = function(id) {
+OneSignal.cancelNotification = function(id) {
 	if (Platform.OS == 'android') {
 		RNOneSignal.cancelNotification(id);
 	} else {
@@ -224,40 +224,44 @@ Notifications.cancelNotification = function(id) {
 	}
 };
 
-Notifications.idsAvailable = function(idsAvailable) {
+OneSignal.idsAvailable = function(idsAvailable) {
 	console.log('Please use the onIdsAvailable event instead, it can be defined in the register options');
 };
 
 //Sends MD5 and SHA1 hashes of the user's email address (https://documentation.onesignal.com/docs/ios-sdk-api#section-synchashedemail)
-Notifications.syncHashedEmail = function(email) {
+OneSignal.syncHashedEmail = function(email) {
 	RNOneSignal.syncHashedEmail(email);
 }
 
-Notifications.setLogLevel = function(nsLogLevel, visualLogLevel) {
+OneSignal.setLogLevel = function(nsLogLevel, visualLogLevel) {
 	RNOneSignal.setLogLevel(nsLogLevel, visualLogLevel);
 }
 
 // Listen to events of notification received, opened, device registered and IDSAvailable.
-const myModuleEvt = new NativeEventEmitter(NativeModules.OneSignal);
+const OneSignalEvt = new NativeEventEmitter(RNOneSignal);
 
-myModuleEvt.addListener(DEVICE_NOTIF_RECEIVED_EVENT, (notification) => { 
-	if (Notifications.onNotificationReceived)
-		Notifications.onNotificationReceived(notification)
+OneSignalEvt.addListener(DEVICE_NOTIF_RECEIVED_EVENT, (receivedResult) => { 
+	if (OneSignal.onNotificationReceived) {
+		const notification = JSON.parse(receivedResult.notification);
+		OneSignal.onNotificationReceived(notification);
+	}
 });
 
-myModuleEvt.addListener(DEVICE_NOTIF_OPENED_EVENT, (result) => { 
-	if (Notifications.onNotificationOpened)
-		Notifications.onNotificationOpened(result)
+OneSignalEvt.addListener(DEVICE_NOTIF_OPENED_EVENT, (openResult) => { 
+	if (OneSignal.onNotificationOpened) {
+		const result = JSON.parse(openResult.result);
+		OneSignal.onNotificationOpened(result.notification);
+	}
 });
 
-myModuleEvt.addListener(DEVICE_NOTIF_REG_EVENT, (notifData) => { 
-	if (Notifications.onNotificationsRegistered)
-		Notifications.onNotificationsRegistered(notifData)
+OneSignalEvt.addListener(DEVICE_NOTIF_REG_EVENT, (notifData) => { 
+	if (OneSignal.onNotificationsRegistered)
+		OneSignal.onNotificationsRegistered(notifData)
 });
 
-myModuleEvt.addListener(DEVICE_IDS_AVAILABLE, (idsAvailable) => {
-	if (Notifications.onIdsAvailable)
-		Notifications.onIdsAvailable(idsAvailable)
+OneSignalEvt.addListener(DEVICE_IDS_AVAILABLE, (idsAvailable) => {
+	if (OneSignal.onIdsAvailable)
+		OneSignal.onIdsAvailable(idsAvailable)
 });
 
-module.exports = Notifications;
+module.exports = OneSignal;

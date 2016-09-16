@@ -88,11 +88,11 @@ public class RNOneSignal extends ReactContextBaseJavaModule implements Lifecycle
     @ReactMethod
     public void inFocusDisplaying(int displayOption) {
         OneSignal.OSInFocusDisplayOption opt = OneSignal.OSInFocusDisplayOption.InAppAlert;
-+        if (displayOption == 0)
-+            opt = OneSignal.OSInFocusDisplayOption.None;
-+        else if (displayOption == 2)
-+            opt = OneSignal.OSInFocusDisplayOption.Notification;
-+        OneSignal.setInFocusDisplaying(opt);
+        if (displayOption == 0)
+            opt = OneSignal.OSInFocusDisplayOption.None;
+        else if (displayOption == 2)
+            opt = OneSignal.OSInFocusDisplayOption.Notification;
+        OneSignal.setInFocusDisplaying(opt);
     }
 
     @ReactMethod
@@ -223,7 +223,7 @@ public class RNOneSignal extends ReactContextBaseJavaModule implements Lifecycle
 
     private void notifyNotificationReceived(Bundle bundle) {
         final WritableMap params = Arguments.createMap();
-        params.putString("notification", bundle.getString("notification"));
+        params.putString("notification", bundle.getString("message"));
         sendEvent("remoteNotificationReceived", params);
     }
 
