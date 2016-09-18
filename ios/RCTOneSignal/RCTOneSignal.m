@@ -1,7 +1,5 @@
 #import "RCTOneSignal.h"
 #import "RCTConvert.h"
-#import "RCTBridge.h"
-#import "RCTEventDispatcher.h"
 #import "RCTUtils.h"
 
 #import <OneSignal/OneSignal.h>
@@ -20,19 +18,16 @@
 + (void) setMSDKType:(NSString*)type;
 @end
 
-@interface RCTOneSignal ()
-@end
+@implementation RNOneSignal
+@synthesize bridge = _bridge;
 
-@implementation RCTOneSignal
+RCT_EXPORT_MODULE()
 
+- (dispatch_queue_t)methodQueue
+{
+    return dispatch_get_main_queue();
+}
 
-RCT_EXPORT_MODULE(RNOneSignal)
-
-/**
-* Override this method to return an array of supported event names. Attempting
-* to observe or send an event that isn't included in this list will result in
-* an error.
-*/
 - (NSArray<NSString *> *)supportedEvents {
     return @[@"remoteNotificationReceived", @"remoteNotificationOpened", @"remoteNotificationsRegistered", @"idsAvailable"];
 }
@@ -41,15 +36,9 @@ RCT_EXPORT_MODULE(RNOneSignal)
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (id)initWithLaunchOptions:(NSDictionary *)launchOptions appId:(NSString *)appId {
-
-    return [self initWithLaunchOptions:launchOptions appId:appId settings:nil];
-}
-
 - (id)initWithLaunchOptions:(NSDictionary *)launchOptions appId:(NSString *)appId settings:(NSDictionary*)settings {
     
     [OneSignal setMSDKType:@"react"];
-    
     [OneSignal initWithLaunchOptions:launchOptions
                                appId:appId
           handleNotificationReceived:^(OSNotification* notification) {
@@ -61,11 +50,6 @@ RCT_EXPORT_MODULE(RNOneSignal)
                  settings:settings];
 
     return self;
-}
-
-// This isn't required, the iOS native SDK already hooks into this event.
-+ (void)didReceiveRemoteNotification:(NSDictionary *)dictionary {
-    // Keeping empty method around so developers do not get compile errors when updating versions.
 }
 
 - (void)handleRemoteNotificationReceived:(NSString *)notification {
@@ -152,7 +136,7 @@ RCT_EXPORT_METHOD(configure) {
           @"userId" : userId ?: [NSNull null]
         };
 
-       // [self sendEventWithName:@"idsAvailable" body:params];
+        [self sendEventWithName:@"idsAvailable" body:params];
     }];
 }
 
