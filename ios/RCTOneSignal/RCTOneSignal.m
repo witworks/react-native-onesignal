@@ -19,7 +19,6 @@
 @end
 
 @implementation RNOneSignal
-@synthesize bridge = _bridge;
 
 RCT_EXPORT_MODULE()
 
@@ -37,18 +36,19 @@ RCT_EXPORT_MODULE()
 }
 
 - (id)initWithLaunchOptions:(NSDictionary *)launchOptions appId:(NSString *)appId settings:(NSDictionary*)settings {
-    
-    [OneSignal setMSDKType:@"react"];
-    [OneSignal initWithLaunchOptions:launchOptions
-                               appId:appId
-          handleNotificationReceived:^(OSNotification* notification) {
-              [self handleRemoteNotificationReceived:[notification stringify]];
-                 }
-            handleNotificationAction:^(OSNotificationOpenedResult * result) {
-                [self handleRemoteNotificationOpened:[result stringify]];
-            }
-                 settings:settings];
-
+    self = [super init];
+    if(self) {
+        [OneSignal setMSDKType:@"react"];
+        [OneSignal initWithLaunchOptions:launchOptions
+                                   appId:appId
+              handleNotificationReceived:^(OSNotification* notification) {
+                  [self handleRemoteNotificationReceived:[notification stringify]];
+              }
+                handleNotificationAction:^(OSNotificationOpenedResult * result) {
+                    [self handleRemoteNotificationOpened:[result stringify]];
+                }
+                                settings:settings];
+    }
     return self;
 }
 
