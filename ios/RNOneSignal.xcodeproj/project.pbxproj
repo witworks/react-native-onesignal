@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		FD2CCC851C772B4200B2B24E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD2CCC841C772B4200B2B24E /* SystemConfiguration.framework */; };
-		FDB40CC41C5E4E5500CBF09B /* RCTOneSignal.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB40CC31C5E4E5500CBF09B /* RCTOneSignal.m */; };
+		FDB40CC41C5E4E5500CBF09B /* RNOneSignal.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB40CC31C5E4E5500CBF09B /* RNOneSignal.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -24,10 +24,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		3245CDED1BFEE35C00EABF68 /* libRCTOneSignal.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRCTOneSignal.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		3245CDED1BFEE35C00EABF68 /* libRNOneSignal.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRNOneSignal.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD2CCC841C772B4200B2B24E /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
-		FDB40CC21C5E4E5500CBF09B /* RCTOneSignal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTOneSignal.h; sourceTree = "<group>"; };
-		FDB40CC31C5E4E5500CBF09B /* RCTOneSignal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTOneSignal.m; sourceTree = "<group>"; };
+		FDB40CC21C5E4E5500CBF09B /* RNOneSignal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNOneSignal.h; sourceTree = "<group>"; };
+		FDB40CC31C5E4E5500CBF09B /* RNOneSignal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNOneSignal.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,7 +46,7 @@
 			isa = PBXGroup;
 			children = (
 				FD2CCC841C772B4200B2B24E /* SystemConfiguration.framework */,
-				3245CDEF1BFEE35C00EABF68 /* RCTOneSignal */,
+				3245CDEF1BFEE35C00EABF68 /* RNOneSignal */,
 				3245CDEE1BFEE35C00EABF68 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -54,26 +54,26 @@
 		3245CDEE1BFEE35C00EABF68 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3245CDED1BFEE35C00EABF68 /* libRCTOneSignal.a */,
+				3245CDED1BFEE35C00EABF68 /* libRNOneSignal.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		3245CDEF1BFEE35C00EABF68 /* RCTOneSignal */ = {
+		3245CDEF1BFEE35C00EABF68 /* RNOneSignal */ = {
 			isa = PBXGroup;
 			children = (
-				FDB40CC21C5E4E5500CBF09B /* RCTOneSignal.h */,
-				FDB40CC31C5E4E5500CBF09B /* RCTOneSignal.m */,
+				FDB40CC21C5E4E5500CBF09B /* RNOneSignal.h */,
+				FDB40CC31C5E4E5500CBF09B /* RNOneSignal.m */,
 			);
-			path = RCTOneSignal;
+			path = RNOneSignal;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		3245CDEC1BFEE35C00EABF68 /* RCTOneSignal */ = {
+		3245CDEC1BFEE35C00EABF68 /* RNOneSignal */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3245CE011BFEE35C00EABF68 /* Build configuration list for PBXNativeTarget "RCTOneSignal" */;
+			buildConfigurationList = 3245CE011BFEE35C00EABF68 /* Build configuration list for PBXNativeTarget "RNOneSignal" */;
 			buildPhases = (
 				3245CDE91BFEE35C00EABF68 /* Sources */,
 				3245CDEA1BFEE35C00EABF68 /* Frameworks */,
@@ -83,9 +83,9 @@
 			);
 			dependencies = (
 			);
-			name = RCTOneSignal;
-			productName = RCTOneSignal;
-			productReference = 3245CDED1BFEE35C00EABF68 /* libRCTOneSignal.a */;
+			name = RNOneSignal;
+			productName = RNOneSignal;
+			productReference = 3245CDED1BFEE35C00EABF68 /* libRNOneSignal.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -102,7 +102,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 3245CDE81BFEE35C00EABF68 /* Build configuration list for PBXProject "RCTOneSignal" */;
+			buildConfigurationList = 3245CDE81BFEE35C00EABF68 /* Build configuration list for PBXProject "RNOneSignal" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -114,7 +114,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				3245CDEC1BFEE35C00EABF68 /* RCTOneSignal */,
+				3245CDEC1BFEE35C00EABF68 /* RNOneSignal */,
 			);
 		};
 /* End PBXProject section */
@@ -124,7 +124,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FDB40CC41C5E4E5500CBF09B /* RCTOneSignal.m in Sources */,
+				FDB40CC41C5E4E5500CBF09B /* RNOneSignal.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -250,7 +250,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		3245CDE81BFEE35C00EABF68 /* Build configuration list for PBXProject "RCTOneSignal" */ = {
+		3245CDE81BFEE35C00EABF68 /* Build configuration list for PBXProject "RNOneSignal" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3245CDFF1BFEE35C00EABF68 /* Debug */,
@@ -259,7 +259,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3245CE011BFEE35C00EABF68 /* Build configuration list for PBXNativeTarget "RCTOneSignal" */ = {
+		3245CE011BFEE35C00EABF68 /* Build configuration list for PBXNativeTarget "RNOneSignal" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3245CE021BFEE35C00EABF68 /* Debug */,

@@ -1,4 +1,4 @@
-#import "RCTOneSignal.h"
+#import "RNOneSignal.h"
 #import "RCTConvert.h"
 #import "RCTUtils.h"
 
